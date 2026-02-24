@@ -1,67 +1,151 @@
-/* styles.css */
-
-/* Import Inter font from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-
 body {
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;  
   margin: 0;
   padding: 0;
-  background-color: #f9f9f9;
+  background-color: #fafafa;
   color: #111;
 }
 
+/* Layout container */
 .container {
   max-width: 900px;
   margin: 0 auto;
   padding: 60px 20px;
-  text-align: center;
+  text-align: left;
 }
 
+/* Name */
 h1 {
-  font-size: 3em;
+  font-size: 2em;
   margin-bottom: 0.5em;
   font-weight: 700;
+  margin-bottom: 10px;
+  padding: 0 30px;
 }
 
-p {
-  font-size: 1.2em;
-  margin-bottom: 1.5em;
-  font-weight: 400;
+.degree {
+  font-size: 0.55em;
+  color: grey;
+  font-style: normal;
+}
+
+/* Section divider line */
+.section-line {
+  border: none;
+  border-top: 1px solid #000;
+  margin: 25px 0;
+}
+
+/* Intro paragraph */
+.intro {
+  font-size: 1.15em;
+  line-height: 1.7;
+  max-width: 800px;
+  padding: 0 30px;
+  justify-items: left;
+}
+
+.intro a {
+  color: grey
+}
+
+.intro a:hover {
+  color: orange;
+}
+
+/* Navigation */
+.nav-links {
+  display: flex;
+  justify-content: space-between;   /* distributes across width */
+  align-items: center;
+  font-weight: 900;
+  font-size: 1.15em;
+  letter-spacing: 0.03em;
+  padding: 0 30px;
+  font-weight: bold;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: grey
+}
+
+.nav-links a:hover {
+  text-decoration: underline;
+  color: orange;
+}
+
+/* Project block */
+.project-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  text-decoration: none;
+  color: inherit;
+  align-items: left;
+  /* padding: 0 30px; */
+  height: 250px;
+}
+
+.project-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;   /* consistent editorial ratio */
+}
+
+.project-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;   /* shows full image without cropping */
+  display: block;
+}
+.project-text h2 {
+  margin-top: 0;
+  font-size: 1.3em;
+}
+
+.project-text p {
+  font-size: 1.05em;
   line-height: 1.6;
 }
 
-a.button {
-  display: inline-block;
-  background-color: #0366d6;
-  color: white;
-  text-decoration: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: background-color 0.3s;
-}
+/* ---------------------------
+   Responsive behaviour
+----------------------------*/
 
-a.button:hover {
-  background-color: #024e9c;
-}
+/* Tablet */
+@media (max-width: 900px) {
 
-/* Responsive styles */
-@media screen and (max-width: 600px) {
-  .container {
-    padding: 40px 15px;
-  }
-  
   h1 {
-    font-size: 2em;
+    font-size: 2.4em;
   }
 
-  p {
+  .project-block {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Phone */
+@media (max-width: 600px) {
+
+  .container {
+    padding: 40px 18px;
+  }
+
+  .nav-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 0;
+  }
+
+  .nav-links a {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .intro {
     font-size: 1em;
   }
-
-  a.button {
-    padding: 10px 20px;
-    font-size: 0.9em;
-  }
+  
 }
