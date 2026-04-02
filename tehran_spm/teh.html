@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Tehran Spatial Structure Model</title>
+
+<link href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" rel="stylesheet" />
+
+
+<link rel="stylesheet" href="css/styles.css">
+
+</head>
+
+<body>
+
+<div id="panel">
+  <h3>Spatial Configuration Measures <i>by scale of metrics walkable distance</i></h3>
+
+  <!-- ATTRIBUTE -->
+  <label for="attributeSelect">Attribute:</label>
+  <select id="attributeSelect"></select>
+
+  <!-- METHOD -->
+  <label for="methodSelect">Classification:</label>
+  <select id="methodSelect">
+    <option value="quantile">Quantile</option>
+    <option value="equal_interval">Equal Interval</option>
+    <option value="jenks">Natural Breaks</option>
+  </select>
+
+  <!-- CLASSES -->
+  <label for="classSelect">Classes:</label>
+  <select id="classSelect">
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7" selected>7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+  </select>
+</div>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
+
+<script src="js/map.js"></script>
+
+
+<div id="acknowledgement">
+  <p>
+    Base map data © OpenStreetMap contributors. 
+    This spatial model is derived from open data obtained from OpenStreetMap, 
+    processed and analyzed by the author © Sepehr Zhand.
+  </p>
+</div>
+
+</body>
+</html>

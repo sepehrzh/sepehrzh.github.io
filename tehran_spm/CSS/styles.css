@@ -1,0 +1,196 @@
+/* -----------------------------
+   RESET / BASE
+----------------------------- */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #f5f5f5;
+}
+
+
+/* -----------------------------
+   MAP CONTAINER
+----------------------------- */
+
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+
+/* -----------------------------
+   UI PANEL (ATTRIBUTE EXPLORER)
+----------------------------- */
+
+#panel {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+
+  width: 300px;
+  max-width: calc(100% - 32px);
+
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(6px);
+
+  border-radius: 12px;
+  padding: 14px;
+
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+
+  z-index: 10;
+}
+
+
+/* Panel text */
+
+#panel h3 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+#panel label {
+  font-size: 13px;
+  color: #555;
+}
+
+
+/* Dropdown */
+
+#panel select {
+  width: 100%;
+  margin-top: 6px;
+
+  padding: 8px;
+  font-size: 14px;
+
+  border-radius: 6px;
+  border: 1px solid #ccc;
+
+  background: #fff;
+  cursor: pointer;
+}
+
+
+/* -----------------------------
+   MAPLIBRE UI TWEAKS
+----------------------------- */
+
+/* Attribution styling */
+.maplibregl-ctrl-attrib {
+  font-size: 11px;
+}
+/* -----------------------------
+   ACKNOWLEDGEMENT FOOTER
+----------------------------- */
+
+#acknowledgement {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  right: 8px;
+
+  font-size: 11px;
+  color: #444;
+
+  background: rgba(255, 255, 255, 0.85);
+  padding: 6px 8px;
+  border-radius: 6px;
+
+  z-index: 5;
+}
+
+#acknowledgement {
+  position: absolute;
+  bottom: 4px;
+  left: 8px;
+  right: 8px;
+
+  font-size: 10px;
+  color: #555;
+
+  background: rgba(255, 255, 255, 0.7);
+  padding: 4px 6px;
+  border-radius: 5px;
+
+  z-index: 5;
+}
+
+
+/* -----------------------------
+   MOBILE OPTIMISATION
+----------------------------- */
+
+@media (max-width: 600px) {
+
+  #panel {
+    top: auto;
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+
+    width: auto;
+    max-width: none;
+
+    padding: 16px;
+
+    border-radius: 14px;
+  }
+
+  #panel h3 {
+    font-size: 17px;
+  }
+  
+  #panel label {
+    font-size: 14px;
+  }
+
+  #panel select {
+    font-size: 16px;   /* prevents iOS zoom */
+    padding: 10px;
+  }
+  
+  #acknowledgement {
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    border-radius: 0;
+    text-align: center;
+
+    font-size: 10px;
+  }
+}
+
+
+/* -----------------------------
+   FUTURE-PROOFING (LEGEND, ETC.)
+----------------------------- */
+
+/* Placeholder for legend */
+#legend {
+  margin-top: 10px;
+  font-size: 12px;
+}
+
+/* Placeholder for hover info */
+#info {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+
+  font-size: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+
+  z-index: 10;
+}
