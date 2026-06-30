@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SDI Tehran — Spatial Disparity Index</title>
+
+  <!-- MapLibre GL JS v3.6.2 -->
+  <link href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" rel="stylesheet" />
+  <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <div id="app">
+
+    <!-- ── LEFT PANEL ─────────────────────────────────────────────── -->
+    <aside id="panel">
+
+      <div id="panel-header">
+        <div id="panel-watermark">تهران</div>
+        <div id="panel-title-block">
+          <span class="label-eyebrow">Spatial Analysis · Tehran Periphery</span>
+          <h1>SDI<span class="title-accent">.</span></h1>
+          <p class="subtitle">Spatial Disparity Index</p>
+        </div>
+      </div>
+
+      <!-- ── MODE CONTROLS ──────────────────────────────────────── -->
+      <section class="panel-section" id="section-mode">
+        <div class="section-label">Map variable</div>
+
+        <div class="var-row" id="row-var1">
+          <label class="var-label" for="select-var1">Primary</label>
+          <select id="select-var1" class="var-select">
+            <option value="sdi_class" selected>SDI (composite)</option>
+            <option value="score_policy_era_class">Policy era</option>
+            <option value="score_mean_area_class">Plot area</option>
+            <option value="score_perimeter_class">Perimeter</option>
+            <option value="score_mean_pop_class">Population density</option>
+            <option value="whole_CH_2">Street typology (K-Means)</option>
+            <option value="score_dilap_index_class" data-collapsed="true">⚠ Dilapidation index</option>
+            <option value="score_landuse_class" data-collapsed="true">⚠ Land use</option>
+          </select>
+        </div>
+
+        <div class="var-row" id="row-var2">
+          <label class="var-label" for="select-var2">Secondary <span class="label-hint">(bivariate)</span></label>
+          <select id="select-var2" class="var-select">
+            <option value="" selected>— none —</option>
+            <option value="sdi_class">SDI (composite)</option>
+            <option value="score_policy_era_class">Policy era</option>
+            <option value="score_mean_area_class">Plot area</option>
+            <option value="score_perimeter_class">Perimeter</option>
+            <option value="score_mean_pop_class">Population density</option>
+            <option value="score_dilap_index_class" data-collapsed="true">⚠ Dilapidation index</option>
+            <option value="score_landuse_class" data-collapsed="true">⚠ Land use</option>
+          </select>
+        </div>
+
+        <div id="collapsed-warning" class="inline-warning" hidden>
+          ⚠ This variable has near-zero variance across the periphery — the axis will appear uniform.
+        </div>
+      </section>
+
+      <!-- ── LEGEND ─────────────────────────────────────────────── -->
+      <section class="panel-section" id="section-legend">
+        <div class="section-label">Legend</div>
+        <div id="legend-univariate" class="legend-block">
+          <div class="legend-swatches" id="legend-swatches"></div>
+          <div class="legend-endpoints">
+            <span>Low disparity</span><span>High disparity</span>
+          </div>
+        </div>
+        <div id="legend-bivariate" class="legend-block" hidden>
+          <canvas id="bivariate-legend-canvas" width="135" height="135"></canvas>
+          <div id="bv-legend-labels">
+            <span id="bv-label-x"></span>
+            <span id="bv-label-y"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── LAYER TOGGLE ───────────────────────────────────────── -->
+      <section class="panel-section" id="section-layers">
+        <div class="section-label">Overlay</div>
+        <label class="toggle-row" id="toggle-typology">
+          <span class="toggle-text">
+            Street typology clusters
+            <span class="toggle-sub">K-Means k=12 · structural only</span>
+          </span>
+          <span class="toggle-switch">
+            <input type="checkbox" id="cb-typology" />
+            <span class="toggle-track"></span>
+          </span>
+        </label>
+      </section>
+
+      <!-- ── RADAR CHART ────────────────────────────────────────── -->
+      <section class="panel-section" id="section-radar">
+        <div class="section-label">Hex profile <span class="label-hint">hover a hexagon</span></div>
+        <div id="radar-wrap">
+          <canvas id="radar-canvas"></canvas>
+          <div id="radar-placeholder">
+            <span>Move cursor over the map</span>
+          </div>
+        </div>
+        <div id="radar-footnote">
+          ⚠ Land use &amp; dilapidation axes are near-flat — data limitation, not a rendering error.
+        </div>
+      </section>
+
+      <!-- ── HEX INFO ───────────────────────────────────────────── -->
+      <section class="panel-section" id="section-hexinfo" hidden>
+        <div class="section-label">Hex values</div>
+        <dl id="hex-dl"></dl>
+      </section>
+
+    </aside>
+
+    <!-- ── MAP ──────────────────────────────────────────────────────── -->
+    <div id="map">
+      <button id="panel-toggle" aria-label="Toggle panel">☰</button>
+    </div>
+
+  </div>
+
+  <div id="map-overlay"></div>
+
+  <!-- ── ATTRIBUTION BAR ────────────────────────────────────────────── -->
+  <footer id="attribution-bar">
+    <span>SDI Tehran · Sepehr Zhand · <a href="https://github.com/sepehrzh" target="_blank" rel="noopener">sepehrzh</a></span>
+    <span>Space syntax centrality · MLP predictions · H3 res-8 aggregation · 13,848 hexagons</span>
+    <span>Basemap © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors</span>
+  </footer>
+
+  <script src="js/map.js"></script>
+</body>
+</html>
