@@ -125,7 +125,7 @@ function initializeMap() {
         tehran_syntax: {
           type: "vector",
           tiles: [
-            "https://api.mappinest.com/tiles/sepehrzh.tehran/{z}/{x}/{y}.pbf?key=85e95e21-5ca7-406a-b61d-c84225615e45"
+            "https://api.mappinest.com/v1/tiles/sepehrzh.tehran.json?key=85e95e21-5ca7-406a-b61d-c84225615e45"
           ],
           minzoom: 0,
           maxzoom: 18
